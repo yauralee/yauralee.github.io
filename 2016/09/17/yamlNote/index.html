@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="TECH,ddfds," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,16 +84,22 @@
 
 
 
-<meta name="description" content="this is my first Bloghello blog">
+<meta name="description" content="YAML在Rails项目中初步接触到YAML文件是在数据库设置文件database.yml中; 在自己写的Ruby项目中也用到YAML存储数据源。所以关于YAML，希望有更多的认识。
+YAML简述YAML是一种轻量化的数据描述语言，本质是能直观的被电脑识别的数据序列化格式。强调以数据为中心，是类似于数据描述语言XML，但是语法比XML简单很多。
+优点YAML 可以专门用来写配置文件，语法简洁并且易">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello world">
-<meta property="og:url" content="http://yoursite.com/2016/09/02/myFirstBlog/index.html">
+<meta property="og:title" content="yamlNote">
+<meta property="og:url" content="http://yoursite.com/2016/09/17/yamlNote/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="this is my first Bloghello blog">
-<meta property="og:updated_time" content="2016-09-01T16:05:45.000Z">
+<meta property="og:description" content="YAML在Rails项目中初步接触到YAML文件是在数据库设置文件database.yml中; 在自己写的Ruby项目中也用到YAML存储数据源。所以关于YAML，希望有更多的认识。
+YAML简述YAML是一种轻量化的数据描述语言，本质是能直观的被电脑识别的数据序列化格式。强调以数据为中心，是类似于数据描述语言XML，但是语法比XML简单很多。
+优点YAML 可以专门用来写配置文件，语法简洁并且易">
+<meta property="og:updated_time" content="2016-09-17T16:23:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello world">
-<meta name="twitter:description" content="this is my first Bloghello blog">
+<meta name="twitter:title" content="yamlNote">
+<meta name="twitter:description" content="YAML在Rails项目中初步接触到YAML文件是在数据库设置文件database.yml中; 在自己写的Ruby项目中也用到YAML存储数据源。所以关于YAML，希望有更多的认识。
+YAML简述YAML是一种轻量化的数据描述语言，本质是能直观的被电脑识别的数据序列化格式。强调以数据为中心，是类似于数据描述语言XML，但是语法比XML简单很多。
+优点YAML 可以专门用来写配置文件，语法简洁并且易">
 
 
 
@@ -114,9 +120,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/02/myFirstBlog/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/09/17/yamlNote/"/>
 
-  <title> hello world | Blog </title>
+  <title> yamlNote | Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +242,7 @@
             
             
               
-                hello world
+                yamlNote
               
             
           </h1>
@@ -248,30 +254,11 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-02T00:03:23+08:00" content="2016-09-02">
-              2016-09-02
+            <time itemprop="dateCreated" datetime="2016-09-17T23:43:22+08:00" content="2016-09-17">
+              2016-09-17
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
@@ -295,7 +282,35 @@
       
 
       
-        <h1 id="this-is-my-first-Blog"><a href="#this-is-my-first-Blog" class="headerlink" title="this is my first Blog"></a>this is my first Blog</h1><p>hello blog</p>
+        <h2 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h2><p>在Rails项目中初步接触到YAML文件是在数据库设置文件<code>database.yml</code>中; 在自己写的Ruby<a href="https://github.com/yauralee/route/tree/version3" target="_blank" rel="external">项目</a>中也用到YAML存储数据源。所以关于YAML，希望有更多的认识。</p>
+<h4 id="YAML简述"><a href="#YAML简述" class="headerlink" title="YAML简述"></a>YAML简述</h4><p>YAML是一种轻量化的数据描述语言，本质是能直观的被电脑识别的数据序列化格式。强调以数据为中心，是类似于数据描述语言XML，但是语法比XML简单很多。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>YAML 可以专门用来写配置文件，语法简洁并且易读<br>适合在脚本语言中使用，如Ruby<br>YAML比较适合做序列化(???)</p>
+<h4 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h4><ul>
+<li>缩进<br>使用缩进来表达层级之间的关系，相同的层级缩进相同。并且只能用空格缩进，不能用tab。缩进的空格数目不重要，只要相同层级的元素左侧对齐。                           </li>
+<li>冒号<br>冒号连接的前后两部分表示键值对。</li>
+<li>短横线<br>同级前面加短横线，表示数组。<br>例如：      </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">situation_1:</span></div><div class="line">    <span class="symbol">requirement:</span> lengthOfPath</div><div class="line">    <span class="symbol">path:</span></div><div class="line">      - ABC</div><div class="line">      - AD</div><div class="line">      - ADC</div><div class="line">      - AEBCD</div><div class="line">      - AED</div></pre></td></tr></table></figure>
+<p>将会被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"situation_1"</span> =&gt; &#123;<span class="string">"requirement"</span>=&gt;<span class="string">"lengthOfPath"</span>, <span class="string">"path"</span>=&gt;[<span class="string">"ABC"</span>, <span class="string">"AD"</span>, <span class="string">"ADC"</span>, <span class="string">"AEBCD"</span>, <span class="string">"AED"</span>]&#125;&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>＃号<br>表示注释，从＃一直到行尾，都会被解析器忽略。</li>
+<li>字符串<br>字符串默认不使用引号表示。<br>如果字符串之中包含空格或特殊字符，需要放在引号之中。如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">str:</span> <span class="string">'内容： 字符串'</span></div></pre></td></tr></table></figure>
+<p>将会被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">str:</span> <span class="string">'内容: 字符串'</span> &#125;</div></pre></td></tr></table></figure>
+<p>多行字符串可以使用 | 保留换行符，或使用 &gt; 折叠。如：           </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">this:</span> <span class="params">|</span></div><div class="line">  Foo</div><div class="line">  Bar</div><div class="line">that: &gt;</div><div class="line">  Foo</div><div class="line">  Bar</div></pre></td></tr></table></figure>
+<p>将被解析为：            </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">this:</span> <span class="string">'Foo\nBar\n'</span>, <span class="symbol">that:</span> <span class="string">'Foo Bar\n'</span> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>纯量<br>包括字符串、布尔值、整数、浮点数、Null、时间、日期。<br>数值直接以字面量的形式表示。<br>布尔值用true和false表示。<br>null用~表示。<br>YAML 允许使用两个感叹号，强制转换数据类型。如：             </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">e:</span> !!str <span class="number">123</span></div><div class="line"><span class="symbol">f:</span> !!str <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>将被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">e:</span> <span class="string">'123'</span>, <span class="symbol">f:</span> <span class="string">'true'</span> &#125;</div></pre></td></tr></table></figure>
+<h4 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h4><p>编写YAML时首先要能表达清楚大致的意思，其次是要尽量简洁；            尽量用竖向的缩进去表达想要的数据格式，不需要自己将数据包装成数组或hash等；<br>根据项目的需求合理的安排数据的格式，有利于在解析YAML后更方便数据的使用。</p>
 
       
     </div>
@@ -316,25 +331,21 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/TECH/" rel="tag">#TECH</a>
-          
-            <a href="/tags/ddfds/" rel="tag">#ddfds</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/09/12/routeNote/" rel="next" title="routeNote">
+                <i class="fa fa-chevron-left"></i> routeNote
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/09/12/routeNote/" rel="prev" title="routeNote">
-                routeNote <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/18/Iterator/" rel="prev" title="Iterator">
+                Iterator <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -449,7 +460,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#this-is-my-first-Blog"><span class="nav-number">1.</span> <span class="nav-text">this is my first Blog</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#YAML"><span class="nav-number">1.</span> <span class="nav-text">YAML</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#YAML简述"><span class="nav-number">1.0.1.</span> <span class="nav-text">YAML简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">1.0.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语法规则"><span class="nav-number">1.0.3.</span> <span class="nav-text">语法规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用技巧"><span class="nav-number">1.0.4.</span> <span class="nav-text">使用技巧</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>

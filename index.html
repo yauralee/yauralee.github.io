@@ -235,6 +235,266 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/18/Iterator/" itemprop="url">
+                  Iterator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-18T00:25:25+08:00" content="2016-09-18">
+              2016-09-18
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h2><p>收集一些ruby中迭代器的小用法～～～</p>
+<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Ruby的数组、Hash等容器对象都包含了each和collect两个最基本的迭代器。each对集合的每个元素调用block，而collect则将容器中国年的元素传递给块，并且进行处理再返回包含处理结果的新数组。</p>
+<h4 id="字符串迭代器"><a href="#字符串迭代器" class="headerlink" title="字符串迭代器"></a>字符串迭代器</h4><ul>
+<li><strong>each_byte:</strong><br>是字符串中用于处理每个字元的迭代器。如：              </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">"hello"</span>.each_byte &#123;<span class="params">|c|</span> print c, <span class="string">' '</span> &#125;</div><div class="line">=&gt;<span class="number">104</span> <span class="number">101</span> <span class="number">108</span> <span class="number">108</span> <span class="number">111</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>each_line:</strong><br>处理每行字符串的迭代器。如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">str = <span class="string">"fff\nggg\nhhh"</span></div><div class="line">str.each_line&#123;<span class="params">|line|</span> p line&#125;</div><div class="line">=&gt;</div><div class="line"><span class="string">"fff\n"</span></div><div class="line"><span class="string">"ggg\n"</span></div><div class="line"><span class="string">"hhh"</span></div></pre></td></tr></table></figure>
+<h4 id="数字迭代器"><a href="#数字迭代器" class="headerlink" title="数字迭代器"></a>数字迭代器</h4><ul>
+<li><strong>times:</strong><br>对某段代码执行一定次数。如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">2</span>.times &#123;p <span class="string">"test"</span>&#125;</div><div class="line">=&gt;</div><div class="line"><span class="string">"test"</span></div><div class="line"><span class="string">"test"</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sum = <span class="number">0</span></div><div class="line">(<span class="number">1</span>..<span class="number">5</span>).each &#123;<span class="params">|i|</span> sum += i&#125;</div><div class="line">p <span class="string">"Sum="</span>+sum.to_s</div><div class="line">=&gt;<span class="string">"Sum=15"</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sum = <span class="number">0</span></div><div class="line"><span class="number">1</span>.upto(<span class="number">5</span>) &#123;<span class="params">|x|</span> sum += x &#125;</div><div class="line">print <span class="string">"Sum="</span>+sum.to_s</div><div class="line">=&gt;<span class="string">"Sum=15"</span></div></pre></td></tr></table></figure>
+<p>当步进值不为1时，可以使用<strong><code>step</code></strong>方法：           </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sum = <span class="number">0</span></div><div class="line"><span class="number">1</span>.step(<span class="number">5</span>, <span class="number">2</span>) <span class="keyword">do</span> <span class="params">|y|</span></div><div class="line">  sum += y</div><div class="line"><span class="keyword">end</span></div><div class="line">p <span class="string">"Sum="</span>+sum.to_s</div><div class="line">=&gt;Sum=<span class="number">9</span></div></pre></td></tr></table></figure>
+<h4 id="数组迭代器："><a href="#数组迭代器：" class="headerlink" title="数组迭代器："></a>数组迭代器：</h4><ul>
+<li><strong>each_with_index:</strong><br>除了最简单的<code>each</code>，当迭代块中需要使用迭代的次数时，可以使用<code>each_with_index</code>,给块中传入<code>index</code>,如：           </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[<span class="string">'Ruby'</span>,<span class="string">'Java'</span>].each_with_index <span class="keyword">do</span> <span class="params">|lang, i|</span></div><div class="line">  puts <span class="string">"<span class="subst">#&#123;i&#125;</span>: <span class="subst">#&#123;lang&#125;</span>"</span></div><div class="line"><span class="keyword">end</span></div><div class="line">=&gt;</div><div class="line"><span class="number">0</span>: Ruby</div><div class="line"><span class="number">1</span>: Java</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>find_all:</strong><br>可以对数组的元素做出一个挑选，筛选出符合块中条件的值，返回新数组。如：          </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].find_all&#123; <span class="params">|x|</span> x % <span class="number">2</span> == <span class="number">1</span> &#125;</div><div class="line">=&gt;[<span class="number">1</span>,<span class="number">3</span>]</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>delete_if:</strong><br>根据条件删除数组中的某些元素，返回剩余元素组成的数组。如：            </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p [<span class="number">51</span>, <span class="number">101</span>, <span class="number">200</span>].delete_if &#123;<span class="params">|x|</span> x &gt;= <span class="number">100</span> &#125;</div><div class="line">=&gt; [<span class="number">51</span>]</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>inject:</strong><br>遍历所有成员累计出一个值。如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>].inject(<span class="number">0</span>) &#123;<span class="params">|sum,element|</span> sum+element&#125;</div><div class="line">=&gt; <span class="number">16</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>].inject(<span class="number">1</span>) &#123;<span class="params">|product,element|</span> product*element&#125;</div><div class="line">=&gt; <span class="number">105</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找出最长字串find the longest word</span></div><div class="line">longest = [<span class="string">"cat"</span>, <span class="string">"sheep"</span>, <span class="string">"bear"</span>].inject <span class="keyword">do</span> <span class="params">|memo,word|</span></div><div class="line">  ( memo.length &gt; word.length ) ? memo : word</div><div class="line"><span class="keyword">end</span></div><div class="line">puts longest</div><div class="line">=&gt;sheep</div></pre></td></tr></table></figure>
+<h4 id="hash迭代器"><a href="#hash迭代器" class="headerlink" title="hash迭代器"></a>hash迭代器</h4><ul>
+<li><strong>each:</strong>              </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sum = <span class="number">0</span></div><div class="line">outcome = &#123;<span class="string">"book1"</span>=&gt;<span class="number">1000</span>, <span class="string">"book2"</span>=&gt;<span class="number">1000</span>,<span class="string">"book3"</span>=&gt;<span class="number">4000</span>&#125;</div><div class="line">outcome.each&#123;<span class="params">|item, price|</span></div><div class="line">  sum += price</div><div class="line">&#125;</div><div class="line">p <span class="string">"Sum="</span>+sum.to_s</div><div class="line">=&gt; <span class="string">"Sum=6000"</span></div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sum = <span class="number">0</span></div><div class="line">outcome = &#123;<span class="string">"book1"</span>=&gt;<span class="number">1000</span>, <span class="string">"book2"</span>=&gt;<span class="number">1000</span>,<span class="string">"book3"</span>=&gt;<span class="number">4000</span>&#125;</div><div class="line">outcome.each&#123;<span class="params">|pair|</span></div><div class="line">  sum += pair[<span class="number">1</span>]</div><div class="line">&#125;</div><div class="line">print <span class="string">"Sum="</span>+sum.to_s</div><div class="line">=&gt; Sum=<span class="number">6000</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>each_key:</strong>  </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">outcome = &#123;<span class="string">"book1"</span>=&gt;<span class="number">1000</span>, <span class="string">"book2"</span>=&gt;<span class="number">1000</span>,<span class="string">"book3"</span>=&gt;<span class="number">4000</span>&#125;</div><div class="line">outcome.each_key <span class="keyword">do</span> <span class="params">|k|</span></div><div class="line">  puts k</div><div class="line"><span class="keyword">end</span></div><div class="line">=&gt;</div><div class="line">book1</div><div class="line">book2</div><div class="line">book3</div><div class="line"><span class="string">``</span><span class="string">`  </span></div><div class="line"></div><div class="line">* **each_value:**            </div><div class="line"></div><div class="line">`<span class="string">``</span>Ruby</div><div class="line"> outcome = &#123;<span class="string">"book1"</span>=&gt;<span class="number">1000</span>, <span class="string">"book2"</span>=&gt;<span class="number">1000</span>,<span class="string">"book3"</span>=&gt;<span class="number">4000</span>&#125;</div><div class="line">outcome.each_value <span class="keyword">do</span> <span class="params">|v|</span></div><div class="line">  puts v</div><div class="line"><span class="keyword">end</span></div><div class="line">=&gt;</div><div class="line"><span class="number">1000</span></div><div class="line"><span class="number">1000</span></div><div class="line"><span class="number">4000</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/17/yamlNote/" itemprop="url">
+                  yamlNote
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T23:43:22+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h2><p>在Rails项目中初步接触到YAML文件是在数据库设置文件<code>database.yml</code>中; 在自己写的Ruby<a href="https://github.com/yauralee/route/tree/version3" target="_blank" rel="external">项目</a>中也用到YAML存储数据源。所以关于YAML，希望有更多的认识。</p>
+<h4 id="YAML简述"><a href="#YAML简述" class="headerlink" title="YAML简述"></a>YAML简述</h4><p>YAML是一种轻量化的数据描述语言，本质是能直观的被电脑识别的数据序列化格式。强调以数据为中心，是类似于数据描述语言XML，但是语法比XML简单很多。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>YAML 可以专门用来写配置文件，语法简洁并且易读<br>适合在脚本语言中使用，如Ruby<br>YAML比较适合做序列化(???)</p>
+<h4 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h4><ul>
+<li>缩进<br>使用缩进来表达层级之间的关系，相同的层级缩进相同。并且只能用空格缩进，不能用tab。缩进的空格数目不重要，只要相同层级的元素左侧对齐。                           </li>
+<li>冒号<br>冒号连接的前后两部分表示键值对。</li>
+<li>短横线<br>同级前面加短横线，表示数组。<br>例如：      </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">situation_1:</span></div><div class="line">    <span class="symbol">requirement:</span> lengthOfPath</div><div class="line">    <span class="symbol">path:</span></div><div class="line">      - ABC</div><div class="line">      - AD</div><div class="line">      - ADC</div><div class="line">      - AEBCD</div><div class="line">      - AED</div></pre></td></tr></table></figure>
+<p>将会被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"situation_1"</span> =&gt; &#123;<span class="string">"requirement"</span>=&gt;<span class="string">"lengthOfPath"</span>, <span class="string">"path"</span>=&gt;[<span class="string">"ABC"</span>, <span class="string">"AD"</span>, <span class="string">"ADC"</span>, <span class="string">"AEBCD"</span>, <span class="string">"AED"</span>]&#125;&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>＃号<br>表示注释，从＃一直到行尾，都会被解析器忽略。</li>
+<li>字符串<br>字符串默认不使用引号表示。<br>如果字符串之中包含空格或特殊字符，需要放在引号之中。如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">str:</span> <span class="string">'内容： 字符串'</span></div></pre></td></tr></table></figure>
+<p>将会被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">str:</span> <span class="string">'内容: 字符串'</span> &#125;</div></pre></td></tr></table></figure>
+<p>多行字符串可以使用 | 保留换行符，或使用 &gt; 折叠。如：           </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">this:</span> <span class="params">|</span></div><div class="line">  Foo</div><div class="line">  Bar</div><div class="line">that: &gt;</div><div class="line">  Foo</div><div class="line">  Bar</div></pre></td></tr></table></figure>
+<p>将被解析为：            </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">this:</span> <span class="string">'Foo\nBar\n'</span>, <span class="symbol">that:</span> <span class="string">'Foo Bar\n'</span> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>纯量<br>包括字符串、布尔值、整数、浮点数、Null、时间、日期。<br>数值直接以字面量的形式表示。<br>布尔值用true和false表示。<br>null用~表示。<br>YAML 允许使用两个感叹号，强制转换数据类型。如：             </li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">e:</span> !!str <span class="number">123</span></div><div class="line"><span class="symbol">f:</span> !!str <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>将被解析为：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="symbol">e:</span> <span class="string">'123'</span>, <span class="symbol">f:</span> <span class="string">'true'</span> &#125;</div></pre></td></tr></table></figure>
+<h4 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h4><p>编写YAML时首先要能表达清楚大致的意思，其次是要尽量简洁；            尽量用竖向的缩进去表达想要的数据格式，不需要自己将数据包装成数组或hash等；<br>根据项目的需求合理的安排数据的格式，有利于在解析YAML后更方便数据的使用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/12/routeNote/" itemprop="url">
                   routeNote
                 </a>
@@ -316,9 +576,22 @@
 <li>计算部分采用了很多递归，如果单独用递归也能完成题目的需求，但是递归需要使用的参数过多，所以在递归之外嵌套一个外层方法，对参数进行一定的处理。</li>
 <li>逻辑部分，在递归中是一定要有递归结束的条件的，但是有些条件放在递归之前与之后，结束条件中是不是使用<code>return</code>都会影响最后的结果，还应注意边界条件。比如下面的逻辑：</li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">number_of_routes_with_max_stops</span><span class="params">(route_map, start_and_end_station, max_stop)</span></span></div><div class="line">      @condition_and_requirement = &#123;<span class="symbol">:route_map</span> =&gt; route_map, <span class="symbol">:end_station</span> =&gt; start_and_end_station[<span class="number">1</span>],</div><div class="line">                                    <span class="symbol">:max_stop</span> =&gt; max_stop, <span class="symbol">:number_of_routes</span> =&gt; <span class="number">0</span>&#125;</div><div class="line">      route_with_max_stop(start_and_end_station[<span class="number">0</span>], <span class="number">1</span>)</div><div class="line">      @condition_and_requirement[<span class="symbol">:number_of_routes</span>]</div><div class="line">  <span class="keyword">end</span>       </div><div class="line"></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">route_with_max_stop</span><span class="params">(current_station, current_stop)</span></span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">if</span> current_stop &gt; @condition_and_requirement[<span class="symbol">:max_stop</span>]</div><div class="line">      @condition_and_requirement[<span class="symbol">:route_map</span>].next_stations(current_station).each <span class="keyword">do</span> <span class="params">|station|</span></div><div class="line">        route_with_max_stop(station, current_stop + <span class="number">1</span>)</div><div class="line">      <span class="keyword">end</span></div><div class="line">      @condition_and_requirement[<span class="symbol">:number_of_routes</span>] += <span class="number">1</span> <span class="keyword">if</span> current_station == @condition_and_requirement[<span class="symbol">:end_station</span>]</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="string">``</span><span class="string">`   </span></div><div class="line"></div><div class="line">这段逻辑实现了计算在中转站数要求下起止站点之间路线数的方法，`route_with_max_stop<span class="string">`是递归方法，被外层方法`</span>number_of_routes_with_max_stops<span class="string">`调用。递归方法中</span></div></pre></td></tr></table></figure>
-<pre><code>@condition_and_requirement[:number_of_routes] += 1 if current_station == @condition_and_requirement[:end_station]
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这个结束递归的条件就必须放在后面，因为它表示如果当前的`station`是终止站，则结束。如果起始点和终止点相同，那么条件放在调用递归前就会直接使程序进入条件；不能使用`return`是因为，如果所要求的中转站数较大，那么路线很有可能会重复，比如计算`C``C`之间的路线，可能的不重复情况有`CBC``CDEC`,那么去掉`retrun`，才能有更多的排列组合结果`CBCDEC`。                  </div><div class="line">* 为了代码整洁，多使用三目运算符代替`if-else`：</div><div class="line">* `if, unless`等条件判断语句可以和执行语句写在同一行，比如：</div><div class="line"></div><div class="line">```Ruby</div><div class="line">break weight = -1 if weight_tmp == -1</div><div class="line">```  </div><div class="line"></div><div class="line">相比于</div><div class="line"></div><div class="line">```Ruby</div><div class="line">if weight_tmp == -1</div><div class="line">   weight = -1</div><div class="line">   break</div><div class="line">end</div><div class="line">```  </div><div class="line"></div><div class="line">看起来更简洁。</div><div class="line">* 如果方法在不同的条件下返回值的类型不同，应避免让表示结果的变量随着条件的改变自身的数据类型，例如：</div><div class="line"></div><div class="line">```Ruby</div><div class="line">def weight_of_certain_route(route_map, certain_route)</div><div class="line">    weight = 0</div><div class="line">    (0..certain_route.length-2).each &#123; |index|</div><div class="line">      weight_tmp = route_map.weight_between_two_stations(certain_route[index], certain_route[index+1])</div><div class="line">      break weight = null if weight_tmp == null</div><div class="line">      weight += weight_tmp</div><div class="line">    &#125;</div><div class="line">    weight == null ? &apos;NO SUCH ROUTE&apos; : weight</div><div class="line">end</div><div class="line"></div><div class="line"></div><div class="line">def weight_of_certain_route(route_map, certain_route)</div><div class="line">    weight = 0</div><div class="line">    (0..certain_route.length-2).each &#123; |index|</div><div class="line">      weight_tmp = route_map.weight_between_two_stations(certain_route[index], certain_route[index+1])</div><div class="line">      break weight = &apos;NO SUCH ROUTE&apos; if weight_tmp == null</div><div class="line">      weight += weight_tmp</div><div class="line">    &#125;</div><div class="line">    weight</div><div class="line">end</div></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">number_of_routes_with_max_stops</span><span class="params">(route_map, start_and_end_station, max_stop)</span></span></div><div class="line">    @condition_and_requirement = &#123;<span class="symbol">:route_map</span> =&gt; route_map, <span class="symbol">:end_station</span> =&gt; start_and_end_station[<span class="number">1</span>],</div><div class="line">                                  <span class="symbol">:max_stop</span> =&gt; max_stop, <span class="symbol">:number_of_routes</span> =&gt; <span class="number">0</span>&#125;</div><div class="line">    route_with_max_stop(start_and_end_station[<span class="number">0</span>], <span class="number">1</span>)</div><div class="line">    @condition_and_requirement[<span class="symbol">:number_of_routes</span>]</div><div class="line"><span class="keyword">end</span>       </div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">route_with_max_stop</span><span class="params">(current_station, current_stop)</span></span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">if</span> current_stop &gt; @condition_and_requirement[<span class="symbol">:max_stop</span>]</div><div class="line">    @condition_and_requirement[<span class="symbol">:route_map</span>].next_stations(current_station).each <span class="keyword">do</span> <span class="params">|station|</span></div><div class="line">      route_with_max_stop(station, current_stop + <span class="number">1</span>)</div><div class="line">    <span class="keyword">end</span></div><div class="line">    @condition_and_requirement[<span class="symbol">:number_of_routes</span>] += <span class="number">1</span> <span class="keyword">if</span> current_station == @condition_and_requirement[<span class="symbol">:end_station</span>]</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>这段逻辑实现了计算在中转站数要求下起止站点之间路线数的方法，<code>route_with_max_stop</code>是递归方法，被外层方法<code>number_of_routes_with_max_stops</code>调用。递归方法中</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@condition_and_requirement[<span class="symbol">:number_of_routes</span>] += <span class="number">1</span> <span class="keyword">if</span> current_station == @condition_and_requirement[<span class="symbol">:end_station</span>]</div></pre></td></tr></table></figure>
+<p>这个结束递归的条件就必须放在后面，因为它表示如果当前的<code>station</code>是终止站，则结束。如果起始点和终止点相同，那么条件放在调用递归前就会直接使程序进入条件；不能使用<code>return</code>是因为，如果所要求的中转站数较大，那么路线很有可能会重复，比如计算<code>C``C</code>之间的路线，可能的不重复情况有<code>CBC``CDEC</code>,那么去掉<code>retrun</code>，才能有更多的排列组合结果<code>CBCDEC</code>。                  </p>
+<ul>
+<li>为了代码整洁，多使用三目运算符代替<code>if-else</code>：</li>
+<li><code>if, unless</code>等条件判断语句可以和执行语句写在同一行，比如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">break</span> weight = -<span class="number">1</span> <span class="keyword">if</span> weight_tmp == -<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>相比于</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> weight_tmp == -<span class="number">1</span></div><div class="line">   weight = -<span class="number">1</span></div><div class="line">   <span class="keyword">break</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>看起来更简洁。</p>
+<ul>
+<li>如果方法在不同的条件下返回值的类型不同，应避免让表示结果的变量随着条件的改变自身的数据类型，例如：</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_of_certain_route</span><span class="params">(route_map, certain_route)</span></span></div><div class="line">    weight = <span class="number">0</span></div><div class="line">    (<span class="number">0</span>..certain_route.length-<span class="number">2</span>).each &#123; <span class="params">|index|</span></div><div class="line">      weight_tmp = route_map.weight_between_two_stations(certain_route[index], certain_route[index+<span class="number">1</span>])</div><div class="line">      <span class="keyword">break</span> weight = null <span class="keyword">if</span> weight_tmp == null</div><div class="line">      weight += weight_tmp</div><div class="line">    &#125;</div><div class="line">    weight == null ? <span class="string">'NO SUCH ROUTE'</span> : weight</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_of_certain_route</span><span class="params">(route_map, certain_route)</span></span></div><div class="line">    weight = <span class="number">0</span></div><div class="line">    (<span class="number">0</span>..certain_route.length-<span class="number">2</span>).each &#123; <span class="params">|index|</span></div><div class="line">      weight_tmp = route_map.weight_between_two_stations(certain_route[index], certain_route[index+<span class="number">1</span>])</div><div class="line">      <span class="keyword">break</span> weight = <span class="string">'NO SUCH ROUTE'</span> <span class="keyword">if</span> weight_tmp == null</div><div class="line">      weight += weight_tmp</div><div class="line">    &#125;</div><div class="line">    weight</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 <p>这个方法中，不同条件下返回<code>String</code>或者<code>Integer</code>,应避免使用第二种方式，直接给<code>weight</code>变量赋予不同类型的值，变量的数据类型应保持不变。</p>
 <h2 id="ResultPrinter"><a href="#ResultPrinter" class="headerlink" title="ResultPrinter"></a>ResultPrinter</h2><ul>
 <li><code>Printer</code>也应和 <code>InputParser</code>类似，职能要单一，不应该有计算的逻辑。</li>
@@ -338,30 +611,13 @@
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> File.expand_path(<span class="string">'../config/application'</span>, __FILE_<span class="number">_</span>)</div><div class="line">Rails.application.load_tasks</div></pre></td></tr></table></figure>
 <p>其中：                                                     </p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">File.expand_path(<span class="string">"../../lib/mygem.rb"</span>, __FILE_<span class="number">_</span>)</div><div class="line">=&gt; <span class="string">".../path/to/project/lib/mygem.rb"</span>~~~</div></pre></td></tr></table></figure>
-<pre><code>*So first it resolves the parent of __FILE__, that is bin/, then go to the parent, the root of the project and appends +lib/mygem.rb+.*                
+<pre><code>So first it resolves the parent of __FILE__, that is bin/, then go to the parent, the root of the project and appends +lib/mygem.rb+.                              
 </code></pre><p>相对应的，模仿<code>Rails</code>的方法，可以在Ruby项目中做同样的事情：</p>
-<pre><code class="Ruby"><span class="keyword">require</span> <span class="string">'./lib/process_handler.rb'</span>
-Dir.glob(<span class="string">'lib/tasks/*.rake'</span>).each { <span class="params">|task|</span> load task }
-</code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'./lib/process_handler.rb'</span></div><div class="line">Dir.glob(<span class="string">'lib/tasks/*.rake'</span>).each &#123; <span class="params">|task|</span> load task &#125;</div></pre></td></tr></table></figure>
 <p>则load了其它的task。<br>在<code>Rakefile</code>中可以添加一些default task, 这里写了执行测试的task,名称’default’更改为‘test’:  </p>
-<pre><code class="Ruby"><span class="keyword">begin</span>
-  <span class="keyword">require</span> <span class="string">'rspec/core/rake_task'</span>
-  puts <span class="string">'RUN TESTS:'</span>
-  RSpec::Core::RakeTask.new(<span class="symbol">:spec</span>)
-  task <span class="symbol">:test</span> =&gt; <span class="symbol">:spec</span>
-<span class="keyword">rescue</span> LoadError =&gt; error
-  puts error.message
-<span class="keyword">end</span>
-</code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">begin</span></div><div class="line">  <span class="keyword">require</span> <span class="string">'rspec/core/rake_task'</span></div><div class="line">  puts <span class="string">'RUN TESTS:'</span></div><div class="line">  RSpec::Core::RakeTask.new(<span class="symbol">:spec</span>)</div><div class="line">  task <span class="symbol">:test</span> =&gt; <span class="symbol">:spec</span></div><div class="line"><span class="keyword">rescue</span> LoadError =&gt; error</div><div class="line">  puts error.message</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 <p>接着在<code>lib/tasks</code>下添加了<code>project.task</code>，其中包含了执行程序的task ‘run’：</p>
-<pre><code class="Ruby">namespace <span class="symbol">:project</span> <span class="keyword">do</span>
-  desc <span class="string">'run project to output results'</span>
-  task <span class="symbol">:run</span> =&gt; <span class="string">'test'</span> <span class="keyword">do</span>
-    puts <span class="string">'RESULTS: '</span>
-    ProcessHandler.process(<span class="string">'resource/route.yml'</span>, <span class="string">'resource/calculation_requirement_and_condition.yml'</span>)
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-</code></pre>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">namespace <span class="symbol">:project</span> <span class="keyword">do</span></div><div class="line">  desc <span class="string">'run project to output results'</span></div><div class="line">  task <span class="symbol">:run</span> =&gt; <span class="string">'test'</span> <span class="keyword">do</span></div><div class="line">    puts <span class="string">'RESULTS: '</span></div><div class="line">    ProcessHandler.process(<span class="string">'resource/route.yml'</span>, <span class="string">'resource/calculation_requirement_and_condition.yml'</span>)</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
 <p>其中用<code>task :run =&gt; &#39;test&#39;</code>的方式可以指定task之间的依赖，当执行完‘test’之后才执行’run’,如果‘test’失败则不执行’run’。</p>
 
           
@@ -537,7 +793,7 @@ Dir.glob(<span class="string">'lib/tasks/*.rake'</span>).each { <span class="par
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://p3.music.126.net/8nZ5dJURUiJA_kvuJBFgxw==/7870304232353362.jpg"
+               src="http://www.duitang.com/blog/?id=524926949"
                alt="hana" />
           <p class="site-author-name" itemprop="name">hana</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -545,7 +801,7 @@ Dir.glob(<span class="string">'lib/tasks/*.rake'</span>).each { <span class="par
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
