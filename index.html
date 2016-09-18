@@ -235,6 +235,115 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/19/dynamicMethod/" itemprop="url">
+                  dynamicMethod
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T02:52:09+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="动态方法"><a href="#动态方法" class="headerlink" title="动态方法"></a>动态方法</h2><h3 id="动态调用方法"><a href="#动态调用方法" class="headerlink" title="动态调用方法"></a>动态调用方法</h3><p>调用方法时除了用标识符(.)之外，也可以用<code>object#send</code>方法代替。<code>send</code>方法的第一个参数时方法的名字，既可以是字符串，也可以是符号。剩下的参数和代码块直接传递给调用的方法。<br>为什么使用<code>send</code>?<br>使用<code>send</code>使得想调用的方法名变成参数，由此可以决定调用谁和不调用谁。称为 <strong>动态派发(Dynamic Dispatch)</strong>。例如：           </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>.send(<span class="string">"+"</span>, <span class="number">2</span>)</div><div class="line"><span class="number">1</span>.send(<span class="symbol">:+</span>, <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>注意：符号和字符串在表示方法名时的区别是，符号常用于表示事物的名称，比如方法名。符号不可修改而字符串可以修改。因此，符号更适合表示方法名。                    </p>
+<ul>
+<li>关于动态调用的例子：<br><code>Pry</code>和<code>irb</code>一样都是Ruby的命令行解释器，<code>Pry</code>对象用自己的属性来保存解释器的配置信息，如<code>meemory_size</code>,<code>quiet</code>。</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pry = Pry.new</div><div class="line">pry.memory_size = <span class="number">101</span></div><div class="line">pry.quiet = <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>对于<code>pry#memory_size</code>这种实例方法，都有一个相对应的类方法<code>Pry.memeory_size</code>返回该属性的默认值。如果要配置<code>Pry</code>实例，可以使用<code>Pry#refresh</code>方法，参数是hash，其中的值可以更新相应的属性。如：             </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pry.refresh(<span class="symbol">:memory_size=&gt;</span><span class="number">88</span>, <span class="symbol">:quiet=&gt;false</span>)</div></pre></td></tr></table></figure>
+<p>所以<code>Pry#refresh</code>需要遍历每个属性将其初始化为默认值，并且检查传入的参数中是否有该属性的新值，如果有，则更新该属性值。具体做法如：            </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">refresh</span><span class="params">(options=&#123;&#125;)</span></span></div><div class="line">    defaults[<span class="symbol">:memory_size</span>] = Pry.memory_size</div><div class="line">    <span class="keyword">self</span>.memory_size = options[<span class="symbol">:memory_size</span>] <span class="keyword">if</span> options[<span class="symbol">:memory_size</span>]</div><div class="line"></div><div class="line">    defaults[<span class="symbol">:quiet</span>] = Pry.quiet</div><div class="line">    <span class="keyword">self</span>.quiet = options[<span class="symbol">:quiet</span>] <span class="keyword">if</span> options[<span class="symbol">:quiet</span>]</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>如上的代码会对很多属性做同样的事情，代码重复很多次。而实际的<code>Pry#refresh</code>则是使用动态派发来解决这个问题：            </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">refresh</span><span class="params">(options=&#123;&#125;)</span></span></div><div class="line">    defaults = &#123;&#125;</div><div class="line">    attributes = [<span class="symbol">:input</span>, <span class="symbol">:output</span>, <span class="symbol">:commands</span>, <span class="symbol">:print</span>, <span class="symbol">:quiet</span>, <span class="symbol">:memory_size</span>]</div><div class="line">    attributes.each <span class="keyword">do</span> <span class="params">|attr|</span></div><div class="line">      defaults[<span class="symbol">:attr</span>] = Pry.send attr</div><div class="line">    <span class="keyword">end</span></div><div class="line">    defaults.merge!(options).each <span class="keyword">do</span> <span class="params">|key, value|</span></div><div class="line">      send(<span class="string">"<span class="subst">#&#123;key&#125;</span>="</span>, value) <span class="keyword">if</span> respond_to?(<span class="string">"<span class="subst">#&#123;key&#125;</span>="</span>)</div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<ul>
+<li>私有性问题<br><code>send</code>可以调用任何方法，包括私有方法。如果为了避免破坏封装，可以使用<code>public_send</code>方法。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/18/Iterator/" itemprop="url">
                   Iterator
                 </a>
@@ -801,7 +910,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
